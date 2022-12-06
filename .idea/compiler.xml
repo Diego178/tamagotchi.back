@@ -12,7 +12,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="tamagotchi" target="1.7" />
-      <module name="tamagotchi.back" target="1.7" />
+      <module name="tamagotchi.back" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
