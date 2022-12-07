@@ -53,10 +53,10 @@ public class DAO {
             stm.setString(2, u.getPokemon());
             stm.setString(3, u.getContrasena());
             stm.setString(4, u.getMascota());
-            stm.setInt(5, u.getVida());
-            stm.setInt(6, u.getEnergia());
-            stm.setInt(7, u.getHambre());
-            stm.setInt(8, u.getSuciedad());
+            stm.setInt(5, 100);
+            stm.setInt(6, 100);
+            stm.setInt(7, 0);
+            stm.setInt(8, 0);
 
             if(stm.executeUpdate() > 0)
                 msj+="El User se agrego";

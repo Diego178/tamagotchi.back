@@ -8,13 +8,14 @@ public class Conexion {
     private static String url = "jdbc:mysql://127.0.0.1:3306/tamagotchi";
     private static String DriverName = "com.mysql.cj.jdbc.Driver";
     private static String username = "root";
-    private static String pass = "137913";
+    private static String pass = "";
     private static Connection connection = null;
 
     public static Connection getConnection(){
         try{
             Class.forName(DriverName);
             connection = (Connection)DriverManager.getConnection(url, username, pass);
+            System.out.println("¡CONEXION EXITOSA!");
         }catch (SQLException e){
             System.out.println(e);
         } catch (ClassNotFoundException e) {

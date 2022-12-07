@@ -12,7 +12,7 @@ public class App
     private static Gson gson = new Gson();
     public static void main( String[] args )
     {
-        port(80);
+        //port(80);
         options("/*", (request, response) -> {
             String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
             System.out.println(accessControlRequestHeaders);
@@ -28,11 +28,13 @@ public class App
         });
 
         before((req, res) -> res.header("Access-Control-Allow-Origin", "*"));
-        System.out.println("Hello World!");
+        System.out.println("ESTÁ EN FUNCIONAMIENTO.");
 
         post("/crear", (req, res) -> {
             String datosJugador = req.body();
+            System.out.println("aaa");
             Datos u = gson.fromJson(datosJugador, Datos.class);
+            System.out.println("bbbbbb");
             if(u==null){
                 res.status(400);
                 return "Error, no se creo la cuenta";
