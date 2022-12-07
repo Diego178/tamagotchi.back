@@ -25,6 +25,10 @@ public class Datos {
         this.suciedad = suciedad;
     }
 
+    public Datos(int id) {
+        this.id=id;
+    }
+
     public int getId() {
         return id;
     }

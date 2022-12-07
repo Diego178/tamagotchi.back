@@ -39,7 +39,7 @@ public class DAO {
         return resultado;
     }
 
-    public static String crearUser(Datos u){
+    public static String crearJugador(Datos u){
         PreparedStatement stm = null;
         Connection cc = null;
         String msj="";
@@ -76,14 +76,14 @@ public class DAO {
         String msj="";
         cc=c.getConnection();
         try{
-            String sql = "select id from datos where usuario ='"+nameUser+"' and contrasena= '"+password+"';";
+            String sql = "select id from datos where usuario ='"+nameUser+"' and contrasena='"+password+"';";
             stm = (Statement)cc.createStatement();
             rs =stm.executeQuery(sql);
 
-            Datos u = new Datos(rs.getString("usuario"), rs.getString("pokemon")
-                        , rs.getString("contrasena"), rs.getString("mascota"), rs.getInt("vida")
-                        , rs.getInt("energia"), rs.getInt("hambre"), rs.getInt("suciedad"));
-             System.out.println(u.toString());
+            while(rs.next()){
+                Datos u = new Datos(rs.getInt("id"));
+                System.out.println(u.toString());
+            }
 
         }catch(Exception e){
             System.out.println(e);
