@@ -7,11 +7,11 @@ public class AppPrueba {
 
          //Datos u = new Datos("diego", "julio", "asd", "1", 4, 0, 0, 0);
          //Datos u = DAO.iniciarSesion("diego1", "asd");
-        if(!DAO.eliminar("diego1", "asd")){
-            System.out.println("eeliminado//");
+        if(DAO.existe("diego", "asd")){
+            System.out.println("existe//");
             //System.out.println(u.toString());
         }else{
-            System.out.println("no eliminado");
+            System.out.println("no existe");
         }
 
     }

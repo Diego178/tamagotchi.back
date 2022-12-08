@@ -159,9 +159,37 @@ public class DAO {
             PreparedStatement preparedStmt = cc.prepareStatement(query);
             preparedStmt.setString(1, nameUser);
             preparedStmt.setString(2, password);
-            preparedStmt.execute();
-            System.out.println(preparedStmt.toString());
-            return true;
+            
+
+            if(existe(nameUser, password)){
+                preparedStmt.execute();
+                return true;
+            }
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public static Boolean existe(String nameUser, String password){
+        Statement stm = null;
+        ResultSet rs = null;
+        Connection cc = null;
+        cc=c.getConnection();
+        try{
+            String sql = "select id from datos where usuario ='"+nameUser+"' and contrasena='"+password+"';";
+            stm = (Statement)cc.createStatement();
+            rs =stm.executeQuery(sql);
+            
+            if(rs.next()){
+                System.out.println(rs.getInt("id"));
+                return true;
+            }else{
+                System.out.println("//no vacio");
+                return false;
+            }
+
         }catch(Exception e){
             System.out.println(e);
         }

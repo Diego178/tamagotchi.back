@@ -12,6 +12,7 @@ public class Datos {
     private int suciedad;
 
     public Datos() {
+        this.id=0;
     }
 
     public Datos(String usuario, String vida, String energia, String suciedad, String hambre) {

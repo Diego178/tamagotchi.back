@@ -60,12 +60,12 @@ public class AppBD
         });
 
         post("/eliminar", (req, res) -> {
-            if(!DAO.eliminar(req.queryParams("user"), req.queryParams("contra"))){
-                res.status(400);
-                return false;
+            if(DAO.eliminar(req.queryParams("user"), req.queryParams("contra"))){
+                res.status(200);
+                return true;
             }
-            res.status(200);
-            return true;
+            res.status(400);
+            return false;
         });
 
         post("/iniciarSesion", (req, res) -> {
