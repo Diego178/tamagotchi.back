@@ -8,8 +8,8 @@ public class Conexion {
     private static String url = "jdbc:mysql://127.0.0.1:3306/tamagotchi";
     private static String DriverName = "com.mysql.cj.jdbc.Driver";
     private static String username = "root";
-    // private static String pass = "1234";
-    private static String pass = "";
+     private static String pass = "1234";
+    //private static String pass = "";
     private static Connection connection = null;
 
     public static Connection getConnection(){

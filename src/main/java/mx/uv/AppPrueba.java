@@ -5,11 +5,13 @@ public class AppPrueba {
    
     {
 
-         Datos u = new Datos("diego", "julio", "asd", "1", 3, 0, 0, 0);
-        if(DAO.actualizar(u)){
-            System.out.println("existe//");
+         //Datos u = new Datos("diego", "julio", "asd", "1", 4, 0, 0, 0);
+         //Datos u = DAO.iniciarSesion("diego1", "asd");
+        if(!DAO.eliminar("diego1", "asd")){
+            System.out.println("eeliminado//");
+            //System.out.println(u.toString());
         }else{
-            System.out.println("no existe");
+            System.out.println("no eliminado");
         }
 
     }

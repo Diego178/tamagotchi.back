@@ -60,29 +60,33 @@ public class AppBD
         });
 
         post("/eliminar", (req, res) -> {
-            String datosJugador = req.body();
-            System.out.println("aaa");
-            Datos u = gson.fromJson(datosJugador, Datos.class);
-            System.out.println("bbbbbb");
-            if(u==null){
+            if(!DAO.eliminar(req.queryParams("user"), req.queryParams("contra"))){
                 res.status(400);
-                return "Error, no se creo la cuenta";
+                return false;
             }
             res.status(200);
-            return DAO.crearJugador(u);
+            return true;
         });
 
         post("/iniciarSesion", (req, res) -> {
-            String datosJugador = req.body();
-            System.out.println("aaa");
-            Datos u = gson.fromJson(datosJugador, Datos.class);
-            System.out.println("bbbbbb");
+            Datos u = DAO.iniciarSesion(req.queryParams("user"), req.queryParams("contra"));
+
             if(u==null){
                 res.status(400);
-                return "Error, no se creo la cuenta";
+                return false;
             }
+            JsonObject oRespuesta = new JsonObject();
+            oRespuesta.addProperty("vida", u.getVida());
+            oRespuesta.addProperty("energia", u.getEnergia());
+            oRespuesta.addProperty("suciedad", u.getSuciedad());
+            oRespuesta.addProperty("hambre", u.getHambre());
+            oRespuesta.addProperty("nombre", u.getMascota());
+            oRespuesta.addProperty("dueno", u.getUsuario());
+            oRespuesta.addProperty("pokemon", u.getPokemon());
+
             res.status(200);
-            return DAO.crearJugador(u);
+
+            return oRespuesta;
         });
     }
 }

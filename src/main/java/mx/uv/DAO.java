@@ -68,7 +68,7 @@ public class DAO {
         return msj;
     }
 
-    public static Boolean iniciarSesion(String nameUser, String password){
+    public static Datos iniciarSesion(String nameUser, String password){
         Statement stm = null;
         ResultSet rs = null;
         List<Datos> resultado = new ArrayList<>();
@@ -76,21 +76,28 @@ public class DAO {
         String msj="";
         cc=c.getConnection();
         try{
-            String sql = "select id from datos where usuario ='"+nameUser+"' and contrasena='"+password+"';";
+            String sql = "select vida, energia, suciedad, hambre, mascota, pokemon from datos where usuario ='"+nameUser+"' and contrasena='"+password+"';";
             stm = (Statement)cc.createStatement();
             rs =stm.executeQuery(sql);
 
             while(rs.next()){
-                Datos u = new Datos(rs.getInt("id"));
+                Datos u = new Datos();
+                u.setVida(rs.getInt("vida"));
+                u.setEnergia(rs.getInt("energia"));
+                u.setSuciedad(rs.getInt("suciedad"));
+                u.setHambre(rs.getInt("hambre"));
+                u.setMascota(rs.getString("mascota"));
+                u.setPokemon(rs.getString("pokemon"));
+                u.setUsuario(u.getUsuario());
                 if(u!=null){
-                    return true;
+                    return u;
                 }
             }
 
         }catch(Exception e){
             System.out.println(e);
         }
-        return false;
+        return null;
     }
 
 
@@ -135,16 +142,26 @@ public class DAO {
       preparedStmt.setInt(4, u.getHambre());
       preparedStmt.setString(5, u.getUsuario());
 
-      // execute the java preparedstatement
       preparedStmt.executeUpdate();
+
       return true;
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return false;
+    }
 
-
-            // String sql = "update datos set vida ='"+u.getVida()+"', energia ="+u.getEnergia()+"', suciedad='"+u.getSuciedad()+"', hambre = '"+
-            // u.getHambre()+" where usuario='"+u.getUsuario()+"';'";
-            // stm = (Statement)cc.createStatement();
-            // rs =stm.executeQuery(sql);
-            // return true;
+    public static Boolean eliminar(String nameUser, String password){
+        Connection cc = null;
+        cc=c.getConnection();
+        try{
+            String query = "DELETE FROM datos WHERE usuario = ? and contrasena = ?;";
+            PreparedStatement preparedStmt = cc.prepareStatement(query);
+            preparedStmt.setString(1, nameUser);
+            preparedStmt.setString(2, password);
+            preparedStmt.execute();
+            System.out.println(preparedStmt.toString());
+            return true;
         }catch(Exception e){
             System.out.println(e);
         }
