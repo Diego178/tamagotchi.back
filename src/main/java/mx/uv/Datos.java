@@ -14,6 +14,14 @@ public class Datos {
     public Datos() {
     }
 
+    public Datos(String usuario, String vida, String energia, String suciedad, String hambre) {
+        this.usuario = usuario;
+        this.vida=Integer.parseInt(vida);
+        this.energia=Integer.parseInt(energia);
+        this.suciedad=Integer.parseInt(suciedad);
+        this.hambre=Integer.parseInt(hambre);
+    }
+
     public Datos(String usuario, String pokemon, String contrasena, String mascota, int vida, int energia, int hambre, int suciedad) {
         this.usuario = usuario;
         this.pokemon = pokemon;

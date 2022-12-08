@@ -68,7 +68,7 @@ public class DAO {
         return msj;
     }
 
-    public static String iniciarSesion(String nameUser, String password){
+    public static Boolean iniciarSesion(String nameUser, String password){
         Statement stm = null;
         ResultSet rs = null;
         List<Datos> resultado = new ArrayList<>();
@@ -82,12 +82,72 @@ public class DAO {
 
             while(rs.next()){
                 Datos u = new Datos(rs.getInt("id"));
-                System.out.println(u.toString());
+                if(u!=null){
+                    return true;
+                }
             }
 
         }catch(Exception e){
             System.out.println(e);
         }
-        return msj;
+        return false;
+    }
+
+
+    public static Datos dameUser(String nameUser, String password){
+        Statement stm = null;
+        ResultSet rs = null;
+        List<Datos> resultado = new ArrayList<>();
+        Connection cc = null;
+        cc=c.getConnection();
+        try{
+            String sql = "select usuario, energia, hambre, mascota, pokemon, suciedad, vida  from datos where usuario ='"+nameUser+"' and contrasena='"+password+"';";
+
+            stm = (Statement)cc.createStatement();
+            rs =stm.executeQuery(sql);
+
+            while(rs.next()){
+                Datos u = new Datos(rs.getInt("id"));
+                if(u!=null){
+                    return u;
+                }
+            }
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public static Boolean actualizar(Datos u){
+        Statement stm = null;
+        ResultSet rs = null;
+        List<Datos> resultado = new ArrayList<>();
+        Connection cc = null;
+        String msj="";
+        cc=c.getConnection();
+        try{
+            String query = "update datos set vida = ?, energia = ?, suciedad = ?, hambre = ? where usuario = ?;";
+      PreparedStatement preparedStmt = cc.prepareStatement(query);
+      preparedStmt.setInt   (1, u.getVida());
+      preparedStmt.setInt(2, u.getEnergia());
+      preparedStmt.setInt(3, u.getSuciedad());
+      preparedStmt.setInt(4, u.getHambre());
+      preparedStmt.setString(5, u.getUsuario());
+
+      // execute the java preparedstatement
+      preparedStmt.executeUpdate();
+      return true;
+
+
+            // String sql = "update datos set vida ='"+u.getVida()+"', energia ="+u.getEnergia()+"', suciedad='"+u.getSuciedad()+"', hambre = '"+
+            // u.getHambre()+" where usuario='"+u.getUsuario()+"';'";
+            // stm = (Statement)cc.createStatement();
+            // rs =stm.executeQuery(sql);
+            // return true;
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return false;
     }
 }
