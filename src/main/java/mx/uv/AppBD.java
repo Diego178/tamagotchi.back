@@ -35,47 +35,58 @@ public class AppBD
 
         post("/crear", (req, res) -> {
             String datosJugador = req.body();
-            System.out.println("aaa");
             Datos u = gson.fromJson(datosJugador, Datos.class);
-            System.out.println("bbbbbb");
+            JsonObject oRespuesta = new JsonObject();
             if(u==null){
-                res.status(400);
-                return "Error, no se creo la cuenta";
+                //res.status(400);
+                oRespuesta.addProperty("mensaje", false);
+                return oRespuesta;
             }
             res.status(200);
             return DAO.crearJugador(u);
         });
 
         post("/actualizar", (req, res) -> {
-            Datos u = new Datos(req.queryParams("dueno"), req.queryParams("vida"),
-            req.queryParams("energia"), req.queryParams("suciedad"), req.queryParams("hambre"));
-            
+            String datosJugador = req.body();
+            Datos datos = gson.fromJson(datosJugador, Datos.class);
+            Datos u = new Datos(datos.getUsuario(), datos.getVida() + "", datos.getEnergia() + "", datos.getSuciedad() + "", datos.getHambre() + "");
+            JsonObject oRespuesta = new JsonObject();
             if(DAO.actualizar(u)){
                 res.status(200);
-                return true;
+                oRespuesta.addProperty("mensaje", true);
+                return oRespuesta;
             }else{
-                res.status(400);
-                return false;
+                //res.status(400);
+                oRespuesta.addProperty("mensaje", false);
+                return oRespuesta;
             }
         });
 
         post("/eliminar", (req, res) -> {
-            if(DAO.eliminar(req.queryParams("user"), req.queryParams("contra"))){
+            String datosJugador = req.body();
+            Datos u = gson.fromJson(datosJugador, Datos.class);
+            JsonObject oRespuesta = new JsonObject();
+            if(DAO.eliminar(u.getUsuario(), u.getContrasena())){
                 res.status(200);
-                return true;
+                oRespuesta.addProperty("mensaje", true);
+                return oRespuesta;
             }
-            res.status(400);
-            return false;
+            //res.status(400);
+            oRespuesta.addProperty("mensaje", false);
+            return oRespuesta;
         });
 
         post("/iniciarSesion", (req, res) -> {
-            Datos u = DAO.iniciarSesion(req.queryParams("user"), req.queryParams("contra"));
 
-            if(u==null){
-                res.status(400);
-                return false;
-            }
+            String datosJugador = req.body();
+            Datos datos = gson.fromJson(datosJugador, Datos.class);
+            Datos u = DAO.iniciarSesion(datos.getUsuario(), datos.getContrasena());
             JsonObject oRespuesta = new JsonObject();
+            if(u==null){
+                //res.status(400);
+                oRespuesta.addProperty("mensaje", false);
+                return oRespuesta;
+            }
             oRespuesta.addProperty("vida", u.getVida());
             oRespuesta.addProperty("energia", u.getEnergia());
             oRespuesta.addProperty("suciedad", u.getSuciedad());

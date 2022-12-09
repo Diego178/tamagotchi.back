@@ -71,9 +71,7 @@ public class DAO {
     public static Datos iniciarSesion(String nameUser, String password){
         Statement stm = null;
         ResultSet rs = null;
-        List<Datos> resultado = new ArrayList<>();
         Connection cc = null;
-        String msj="";
         cc=c.getConnection();
         try{
             String sql = "select vida, energia, suciedad, hambre, mascota, pokemon from datos where usuario ='"+nameUser+"' and contrasena='"+password+"';";
@@ -88,7 +86,7 @@ public class DAO {
                 u.setHambre(rs.getInt("hambre"));
                 u.setMascota(rs.getString("mascota"));
                 u.setPokemon(rs.getString("pokemon"));
-                u.setUsuario(u.getUsuario());
+                u.setUsuario(nameUser);
                 if(u!=null){
                     return u;
                 }
@@ -135,16 +133,15 @@ public class DAO {
         cc=c.getConnection();
         try{
             String query = "update datos set vida = ?, energia = ?, suciedad = ?, hambre = ? where usuario = ?;";
-      PreparedStatement preparedStmt = cc.prepareStatement(query);
-      preparedStmt.setInt   (1, u.getVida());
-      preparedStmt.setInt(2, u.getEnergia());
-      preparedStmt.setInt(3, u.getSuciedad());
-      preparedStmt.setInt(4, u.getHambre());
-      preparedStmt.setString(5, u.getUsuario());
+            PreparedStatement preparedStmt = cc.prepareStatement(query);
+            preparedStmt.setInt(1, u.getVida());
+            preparedStmt.setInt(2, u.getEnergia());
+            preparedStmt.setInt(3, u.getSuciedad());
+            preparedStmt.setInt(4, u.getHambre());
+            preparedStmt.setString(5, u.getUsuario());
+            preparedStmt.executeUpdate();
 
-      preparedStmt.executeUpdate();
-
-      return true;
+            return true;
         }catch(Exception e){
             System.out.println(e);
         }
