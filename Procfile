@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* mx.uv.AppBD
+web: java -cp target/classes:target/dependency/* mx.uv.appdb
