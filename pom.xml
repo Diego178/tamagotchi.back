@@ -14,8 +14,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>18</maven.compiler.source>
-    <maven.compiler.target>18</maven.compiler.target>
+    <maven.compiler.source>19</maven.compiler.source>
+    <maven.compiler.target>19</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -35,10 +35,6 @@
       <artifactId>spark-core</artifactId>
       <version>2.9.4</version>
     </dependency>
-    <!-- 
-      Esta versión genera error 
-      La cambié a la que tiene ahora, la 1.7.25
-    -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
@@ -50,52 +46,6 @@
         <version>8.0.28</version>
     </dependency>
   </dependencies>
-
-<!--  <build>-->
-<!--    <pluginManagement>&lt;!&ndash; lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) &ndash;&gt;-->
-<!--      <plugins>-->
-<!--        &lt;!&ndash; clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle &ndash;&gt;-->
-<!--        <plugin>-->
-<!--          <artifactId>maven-clean-plugin</artifactId>-->
-<!--          <version>3.1.0</version>-->
-<!--        </plugin>-->
-<!--        &lt;!&ndash; default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging &ndash;&gt;-->
-<!--        <plugin>-->
-<!--          <artifactId>maven-resources-plugin</artifactId>-->
-<!--          <version>3.0.2</version>-->
-<!--        </plugin>-->
-<!--        <plugin>-->
-<!--          <artifactId>maven-compiler-plugin</artifactId>-->
-<!--          <version>3.8.0</version>-->
-<!--        </plugin>-->
-<!--        <plugin>-->
-<!--          <artifactId>maven-surefire-plugin</artifactId>-->
-<!--          <version>2.22.1</version>-->
-<!--        </plugin>-->
-<!--        <plugin>-->
-<!--          <artifactId>maven-jar-plugin</artifactId>-->
-<!--          <version>3.0.2</version>-->
-<!--        </plugin>-->
-<!--        <plugin>-->
-<!--          <artifactId>maven-install-plugin</artifactId>-->
-<!--          <version>2.5.2</version>-->
-<!--        </plugin>-->
-<!--        <plugin>-->
-<!--          <artifactId>maven-deploy-plugin</artifactId>-->
-<!--          <version>2.8.2</version>-->
-<!--        </plugin>-->
-<!--        &lt;!&ndash; site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle &ndash;&gt;-->
-<!--        <plugin>-->
-<!--          <artifactId>maven-site-plugin</artifactId>-->
-<!--          <version>3.7.1</version>-->
-<!--        </plugin>-->
-<!--        <plugin>-->
-<!--          <artifactId>maven-project-info-reports-plugin</artifactId>-->
-<!--          <version>3.0.0</version>-->
-<!--        </plugin>-->
-<!--      </plugins>-->
-<!--    </pluginManagement>-->
-<!--  </build>-->
   <build>
     <plugins>
       <plugin>
@@ -103,12 +53,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.10.1</version>
         <configuration>
-        <!-- 
-          Hay que cambiar esto también
-
-         -->
-          <source>18</source>
-          <target>18</target> 
+          <source>1.8</source>
+          <target>1.8</target> 
         </configuration>
       </plugin>
       <plugin>
@@ -129,11 +75,26 @@
           <archive>
             <manifest>
               <!-- package+name of your main class -->
-              <mainClass>JavalinHerokuExampleApp</mainClass>
+              <mainClass>mx.uv.AppBD</mainClass>
             </manifest>
           </archive>
         </configuration>
       </plugin>
+        <plugin>
+            <groupId>com.heroku.sdk</groupId>
+            <artifactId>heroku-maven-plugin</artifactId>
+            <version>0.4.4</version>
+            <configuration>
+                <jdkVersion>1.8</jdkVersion>
+                <!-- Use your own application name -->
+                <appName>tamagotchi</appName> 
+                <processTypes>
+                    <!-- Tell Heroku how to launch your application -->
+                    <!-- You might have to remove the ./ in front   -->
+                    <web>java -jar ./target/my-app-1.0-jar-with-dependencies.jar</web>
+                </processTypes>
+            </configuration>
+        </plugin>
     </plugins>
   </build>
 </project>
