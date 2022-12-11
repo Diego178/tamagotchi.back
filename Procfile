@@ -1,1 +1,1 @@
-web: java -cp target/classes:target/dependency/* mx.uv.appdb
+web: java -cp target/classes:target/dependency/* mx.uv.AppBD
